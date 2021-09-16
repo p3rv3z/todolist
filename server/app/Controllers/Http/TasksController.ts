@@ -27,10 +27,11 @@ export default class TasksController {
   public async update({ params, request }: HttpContextContract) {
     const taskSchema = schema.create({
       title: schema.string({}, [rules.maxLength(100)]),
+      is_completed: schema.boolean.optional()
     })
 
     const payload = await request.validate({ schema: taskSchema })
-    
+
     return (await Task.findOrFail(params.id)).merge(payload).save()
   }
 
