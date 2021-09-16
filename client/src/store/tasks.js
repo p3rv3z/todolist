@@ -67,5 +67,9 @@ export default {
     removeTask(state, task) {
       state.tasks.splice(state.tasks.indexOf(task), 1);
     },
+
+    toggleCompleted(state, task) {
+      task.is_completed = !task.is_completed;
+    },
   },
 };

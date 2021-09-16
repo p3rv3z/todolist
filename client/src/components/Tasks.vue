@@ -2,23 +2,38 @@
     <panel title="Tasks">
         <div v-for="task in tasks" :key="task.id" class="mt-2">
             <v-row dense>
-                <v-col cols="11 text-left">
-                    <span v-if="!task.isEditMode">
+                <v-col cols="1">
+                    <v-icon @click="checkClicked(task)">
+                        {{
+                            task.is_completed
+                                ? "check_box"
+                                : "check_box_outline_blank"
+                        }}
+                    </v-icon>
+                </v-col>
+                <v-col cols="10 text-left">
+                    <span v-if="!task.isEditMode" :class="{'text-decoration-line-through': task.is_completed}">
                         {{ task.title }}
                     </span>
                     <v-text-field
                         v-if="task.isEditMode"
                         :value="task.title"
                         @keyup.enter="updateTask(task)"
-                        @input="setTaskTitle({task, title: $event})"
+                        @input="setTaskTitle({ task, title: $event })"
                         dense
                     >
                     </v-text-field>
                 </v-col>
                 <v-col cols="1">
-                    <v-icon v-if="!task.isEditMode" @click="setEditMode(task)">edit</v-icon>
-                    <v-icon v-if="task.isEditMode" @click="updateTask(task)">check</v-icon>
-                    <v-icon v-if="task.isEditMode" @click="deleteTask(task)">delete</v-icon>
+                    <v-icon v-if="!task.isEditMode" @click="setEditMode(task)"
+                        >edit</v-icon
+                    >
+                    <v-icon v-if="task.isEditMode" @click="updateTask(task)"
+                        >check</v-icon
+                    >
+                    <v-icon v-if="task.isEditMode" @click="deleteTask(task)"
+                        >delete</v-icon
+                    >
                 </v-col>
             </v-row>
         </div>
@@ -75,6 +90,7 @@ export default {
             'setEditMode',
             'unsetEditMode',
             'setTaskTitle',
+            'toggleCompleted',
         ]),
 
         ...mapActions('tasks', [
@@ -82,7 +98,12 @@ export default {
             'createTask',
             'updateTask',
             'deleteTask'
-        ])
+        ]),
+
+        checkClicked(task) {
+            this.toggleCompleted(task)
+            this.updateTask(task)
+        }
     },
 
     mounted() {
