@@ -2,7 +2,7 @@
   <div id="app">
     <v-app>
       <v-app-bar app>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-icon>app_bar</v-icon>
         <v-toolbar-title>Todolist</v-toolbar-title>
       </v-app-bar>
 
