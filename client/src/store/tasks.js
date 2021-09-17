@@ -10,9 +10,8 @@ export default {
   },
 
   actions: {
-    async updateTask({ commit }, task) {
-      await HTTP().patch(`tasks/${task.id}`, task)
-      commit('unsetEditMode', task);
+    updateTask(commit, task) {
+      return HTTP().patch(`tasks/${task.id}`, task)
     },
 
     async deleteTask({ commit }, task) {

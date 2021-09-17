@@ -28,7 +28,7 @@
                     <v-icon v-if="!task.isEditMode" @click="setEditMode(task)"
                         >edit</v-icon
                     >
-                    <v-icon v-if="task.isEditMode" @click="updateTask(task)"
+                    <v-icon v-if="task.isEditMode" @click="updateEditMode(task)"
                         >check</v-icon
                     >
                     <v-icon v-if="task.isEditMode" @click="deleteTask(task)"
@@ -100,8 +100,13 @@ export default {
             'deleteTask'
         ]),
 
-        checkClicked(task) {
-            this.toggleCompleted(task)
+        async checkClicked(task) {
+            await this.toggleCompleted(task)
+            this.updateTask(task)
+        },
+
+        async updateEditMode(task) {
+            await this.unsetEditMode(task)
             this.updateTask(task)
         }
     },
