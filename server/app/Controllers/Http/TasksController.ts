@@ -5,7 +5,7 @@ import Task from 'App/Models/Task'
 
 export default class TasksController {
   public async index() {
-    return Task.query().orderBy('id', 'desc')
+    return Task.query().orderBy('id')
   }
 
   public async store({ request, response }: HttpContextContract) {
